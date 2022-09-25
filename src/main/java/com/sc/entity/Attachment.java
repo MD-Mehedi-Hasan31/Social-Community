@@ -1,55 +1,28 @@
 package com.sc.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
+@Data
 @Entity
 @Table(name = "tbattachment")
 public class Attachment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable=false)
-    private long  id;
-    @Column(name="attachment_name", nullable = false)
+    @Column(name = "at_id", nullable=false)
+    private Long id;
+
+    @Column(name="attachment_name", length=1024)
     private String attachmentName;
 
-    @Column(name = "attachment_path", nullable = false)
+    @Column(name = "attachment_path", length=1024)
     private  String attachmentPath;
 
-    @Column(name = "attachment_type", nullable = false)
+    @Column(name = "attachment_type", length=1024)
     private String attachmentType;
 
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getAttachmentName() {
-        return attachmentName;
-    }
-
-    public void setAttachmentName(String attachment_name) {
-        this.attachmentName = attachment_name;
-    }
-
-    public String getAttachmentPath() {
-        return attachmentPath;
-    }
-
-    public void setAttachmentPath(String attachment_path) {
-        this.attachmentPath = attachment_path;
-    }
-
-    public String getAttachmentType() {
-        return attachmentType;
-    }
-
-    public void setAttachmentType(String attachment_type) {
-        this.attachmentType = attachment_type;
-    }
 }

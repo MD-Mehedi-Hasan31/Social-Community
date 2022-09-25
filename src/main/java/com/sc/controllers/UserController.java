@@ -1,12 +1,14 @@
 package com.sc.controllers;
 
 
+import com.sc.Properties;
+import com.sc.config.Utils;
 import com.sc.dao.LocationDao;
 import com.sc.dao.UserDao;
 import com.sc.dto.UserRequestDto;
+import com.sc.entity.Attachment;
 import com.sc.entity.Location;
 import com.sc.entity.User;
-import com.sc.model.UserModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,25 +42,26 @@ public class UserController {
     @GetMapping("user/addUser")
     public String addNewUser(Model model){
         UserRequestDto user = new UserRequestDto();
-        List<Location> locationList = locationDao.getLocations();
+        List<Location> locationList = locationDao.getAllLocation();
         model.addAttribute("user", user);
         model.addAttribute("locationList", locationList);
 
         return "user/addUser";
     }
 
-    @PostMapping("/saveUser")
-    public String saveNewUser(@ModelAttribute("user") UserRequestDto userRequestDto, Model model
+    @PostMapping("user/save")
+    public String saveNewUser(@ModelAttribute("user") UserRequestDto userRequestDto,
+                              @RequestParam("image") MultipartFile file, Model model
             ) throws IOException {
 
-        System.out.println(userRequestDto.getLocationId());
-        //, @RequestParam("attachment") MultipartFile file
+
         Location location = locationDao.findById(userRequestDto.getLocationId());
 
         var user = new User();
         BeanUtils.copyProperties(userRequestDto, user);
-        //  Attachment attachment = fileController.uploadFile(file);
-       // user.setAttachment(attachment);
+        Attachment attachment = Utils.saveFile(file, Properties.USER_FOLDER);
+
+        user.setAttachment(attachment);
         user.setLocation(location);
         userDao.save(user);
         return getUser(model);

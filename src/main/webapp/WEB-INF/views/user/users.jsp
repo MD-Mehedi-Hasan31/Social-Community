@@ -12,10 +12,9 @@
     <title>Create User</title>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-9">
-
+<div>
+    <div>
+        <div>
             <%--@elvariable id="userDto" type="com.sc.dto.UserRequestDto"--%>
                 <table class="table table-striped table-hover">
                     <thead>
@@ -31,15 +30,19 @@
                     <c:forEach var="user" items="${users}" varStatus="counter">
                         <tr>
                             <td>${counter.count}</td>
-                            <td>${user.username}</td>
-                            <td>${user.email}</td>
+                            <td>${user.getUsername()}</td>
+                            <td>${user.getEmail()}</td>
                             <td>${user.getLocation().getLocationName()}</td>
+                            <td> <img src="/file/get/${user.getAttachment().getId()}" alt="image not found" width="100" height="auto"></td>
+
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
 
-                <button type="submit" class="btn btn-primary">Create</button>
+                    <div>
+                         <input type="submit" class="btn btn-success" value="Save"></input>
+                     </div>
         </div>
     </div>
 </div>

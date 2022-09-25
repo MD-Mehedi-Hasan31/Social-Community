@@ -1,6 +1,7 @@
 
 package com.sc.config;
 
+import com.sc.Properties;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -20,23 +21,20 @@ public class AppInitializer implements WebApplicationInitializer {
         rootConfig.refresh();
         servletContext.addListener(new ContextLoaderListener(rootConfig));
 
-        // servletRegister
-        AnnotationConfigWebApplicationContext servletRegister = new AnnotationConfigWebApplicationContext();
-        servletRegister.register(ServletConfig.class);
+        // servletConfig
+        AnnotationConfigWebApplicationContext servletConfig = new AnnotationConfigWebApplicationContext();
+        servletConfig.register(ServletConfig.class);
+        ServletRegistration.Dynamic servletRegistration = servletContext.addServlet("servlet", new DispatcherServlet(servletConfig));
 
-
-        ServletRegistration.Dynamic servletRegistration =
-                servletContext.addServlet("servlet", new DispatcherServlet(servletRegister));
-
-
-       servletRegistration.setMultipartConfig(new MultipartConfigElement("/", 2097152, 4194304, 50));
+        //Multipart Config
+        MultipartConfigElement multipartConfig = new MultipartConfigElement(Properties.TEMP_LOCATION, Properties.MAX_FILE_SIZE, Properties.MAX_REQUEST_SIZE, Properties.FILE_THRESHOLD_SIZE);
+        servletRegistration.setMultipartConfig(multipartConfig);
 
         // Multipart Filter Config
-       FilterRegistration.Dynamic multipartFilter = servletContext.addFilter("multipartFilter", MultipartFilter.class);
-       multipartFilter.addMappingForUrlPatterns(null, true, "/*");
-        //Load  on startup*//*
+        FilterRegistration.Dynamic multipartFilter = servletContext.addFilter("multipartFilter", MultipartFilter.class);
+        multipartFilter.addMappingForUrlPatterns(null, true, "/*");
 
-
+       //Load  on startup*//*
         servletRegistration.setLoadOnStartup(1);
 
         // Add  Mapping

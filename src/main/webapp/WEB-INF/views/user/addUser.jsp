@@ -16,7 +16,7 @@
 <body>
 
 <%--@elvariable id="user" type=""--%>
-<form:form action="/saveUser" enctype="multipart/form-data" method="post" modelAttribute="user">
+<form:form action="${pageContext.request.contextPath}/user/save" enctype="multipart/form-data" method="post" modelAttribute="user">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -48,19 +48,15 @@
                 </from:select>
             </div>
         </div>
-<%--
+
         <div class="col-md-6">
             <div class="form-group file-field">
-                <input class="form-control" type="file" name="attachment" id="contact-attachment">
-                <label class="form-label" for="contact-attachment">
-                    <i class="fas fa-folder mr-2"></i>
-                    Upload Profile Picture...
-                </label>
+                <input type="file" name="image" accept="image/*"/>
             </div>
         </div>
 
     </div>
---%>
+
     <div class="form-group">
         <input type="submit" class="btn btn-success" value="Save">
     </div>

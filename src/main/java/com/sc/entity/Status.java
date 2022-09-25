@@ -18,36 +18,54 @@ public class Status implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private long id;
+    private long id; // Done
+
     @Column(name="title")
-    private String title;
+    private String title; //title
+
     @Column(name = "description")
-    private String description;
+    private String description; //description
+
     @Column(name = "privacy")
-    private String privacy;
+    private String privacy; //privacy
+
     @Column(name="created_at")
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt; // done
 
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private LocalDateTime updatedAt; // done
 
     @Column(name="isdelete")
-    private boolean isdelete;
+    private boolean isdelete; //done
 
+    /*
+    *
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinTable(name = "status_attachments",
+            joinColumns = {@JoinColumn(name = "status_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "attachment_id", referencedColumnName = "id")})
+    private List<Attachment> statusAttachmentList;
+    *
 
-
-    @OneToMany(fetch=FetchType.LAZY)
+    @OneToMany(fetch=FetchType.LAZY, orphanRemoval = true) // not done
     @JoinTable(name = "status_attachment",
             joinColumns={@JoinColumn(name = "status_id", referencedColumnName = "id")},
-            inverseJoinColumns ={@JoinColumn(name="attachment_id", referencedColumnName = "id")})
+            inverseJoinColumns ={@JoinColumn(name="attachment_id", referencedColumnName = "at_id")})
+    private List<Attachment> statusAttachmentList;
+*/
+
+
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinTable(name = "status_attachment",
+                   joinColumns = {@JoinColumn(name = "status_id", referencedColumnName = "id")},
+                   inverseJoinColumns = {@JoinColumn(name = "attachment_id", referencedColumnName = "at_id")})
     private List<Attachment> statusAttachmentList;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // done
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY) // done
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
 

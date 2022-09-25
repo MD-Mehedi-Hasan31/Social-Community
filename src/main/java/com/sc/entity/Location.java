@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "tblocation")
 public class Location implements Serializable {

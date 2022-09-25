@@ -1,15 +1,28 @@
 package com.sc.controllers;
 
 
+import com.sc.Properties;
+import com.sc.config.Utils;
 import com.sc.dao.AttachmentDao;
 import com.sc.dao.LocationDao;
 import com.sc.dao.StatusDao;
+import com.sc.dto.StatusDto;
+import com.sc.entity.Attachment;
+import com.sc.entity.Location;
+import com.sc.entity.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/status")
 public class StatusController {
     @Autowired
     private StatusDao statusDao;
@@ -20,9 +33,9 @@ public class StatusController {
     @Autowired
     private AttachmentDao attachmentDao;
 
-   /* @GetMapping("/create")
+     @GetMapping("/create")
     public ModelAndView create(Model model) {
-        List<Location> locations = locationDao.;
+        List<Location> locations = locationDao.getAllLocation();
         List<String> locationList = new ArrayList<>();
 
         for (Location location : locations) {
@@ -67,6 +80,6 @@ public class StatusController {
             model.addAttribute("status", status);
 
             return "redirect:/status/show/" + status.getId();
-        }*/
+        }
     }
 

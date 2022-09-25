@@ -24,7 +24,7 @@ public class LocationController {
     @GetMapping("/location/show")
     public String getLocations(Model model) {
 
-        List<Location> locationList=locationDao.getLocations();
+        List<Location> locationList=locationDao.getAllLocation();
         model.addAttribute("locationList", locationList);
         return "/location/show";
     }

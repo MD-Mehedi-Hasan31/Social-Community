@@ -12,7 +12,8 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.util.List;
 
-//@Transactional
+
+@Transactional
 @Component
 public class UserDao {
     @Autowired
@@ -33,10 +34,9 @@ public class UserDao {
        return id;
    }
 
-
    public List<User> findAll(){
        Session session = sessionFactory.getCurrentSession();
-       String hql ="FROM User u";
+       String hql ="FROM User";
        Query<User> query= session.createQuery(hql);
        List<User> userList = query.list();
 
