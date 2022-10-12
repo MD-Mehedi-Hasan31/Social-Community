@@ -29,14 +29,34 @@ public class Status implements Serializable {
     @Column(name = "privacy")
     private String privacy; //privacy
 
-    @Column(name="created_at")
-    private LocalDateTime createdAt; // done
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt; // done
-
     @Column(name="isdelete")
     private boolean isdelete; //done
+
+    @Column(name="created_at")
+    private Date createdAt; // done
+
+    @Column(name = "updated_at")
+    private Date updatedAt; // done
+
+
+
+    @ManyToOne(fetch = FetchType.LAZY) // done
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    @OneToOne(fetch = FetchType.LAZY) // done
+    @JoinColumn(name = "location_id", referencedColumnName = "id")
+    private Location location;
+
+
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinTable(name = "status_attachment",
+                   joinColumns = {@JoinColumn(name = "status_id", referencedColumnName = "id")},
+                   inverseJoinColumns = {@JoinColumn(name = "attachment_id", referencedColumnName = "at_id")})
+    private List<Attachment> statusAttachmentList;
+
+
+
 
     /*
     *
@@ -54,19 +74,5 @@ public class Status implements Serializable {
     private List<Attachment> statusAttachmentList;
 */
 
-
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinTable(name = "status_attachment",
-                   joinColumns = {@JoinColumn(name = "status_id", referencedColumnName = "id")},
-                   inverseJoinColumns = {@JoinColumn(name = "attachment_id", referencedColumnName = "at_id")})
-    private List<Attachment> statusAttachmentList;
-
-    @ManyToOne(fetch = FetchType.LAZY) // done
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
-
-    @OneToOne(fetch = FetchType.LAZY) // done
-    @JoinColumn(name = "location_id", referencedColumnName = "id")
-    private Location location;
 
 }

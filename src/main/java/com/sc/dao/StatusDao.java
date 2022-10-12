@@ -4,6 +4,7 @@ import com.sc.entity.Status;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @Transactional
 public class StatusDao {
 
+    @Autowired
     private SessionFactory sessionFactory;
 
     public Long insert(Status status) {
@@ -61,6 +63,8 @@ public class StatusDao {
     }
 
     public List<Status> getAll(){
+
+
         Query query = sessionFactory.getCurrentSession().createQuery("FROM Status", Status.class);
         List<Status> statusList = query.list();
 
