@@ -2,6 +2,7 @@
 package com.sc.config;
 
 import com.sc.Properties;
+/*import org.springframework.security.access.SecurityConfig;*/
 import com.sc.security.SecurityConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
@@ -16,29 +17,33 @@ public class AppInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) {
 
-        // root Config
-        AnnotationConfigWebApplicationContext rootConfig = new AnnotationConfigWebApplicationContext();
+        //root config
+        AnnotationConfigWebApplicationContext rootConfig= new AnnotationConfigWebApplicationContext();
         rootConfig.register(RootConfig.class, DbConfig.class, SecurityConfig.class);
         rootConfig.refresh();
         servletContext.addListener(new ContextLoaderListener(rootConfig));
 
-        // servletConfig
-        AnnotationConfigWebApplicationContext servletConfig = new AnnotationConfigWebApplicationContext();
-        servletConfig.register(ServletConfig.class);
-        ServletRegistration.Dynamic servletRegistration = servletContext.addServlet("servlet", new DispatcherServlet(servletConfig));
 
-        //Multipart Config
-        MultipartConfigElement multipartConfig = new MultipartConfigElement(Properties.TEMP_LOCATION, Properties.MAX_FILE_SIZE, Properties.MAX_REQUEST_SIZE, Properties.FILE_THRESHOLD_SIZE);
+        //servlet Config
+        AnnotationConfigWebApplicationContext servletConfig= new AnnotationConfigWebApplicationContext();
+        servletConfig.register(ServletConfig.class);
+        ServletRegistration.Dynamic servletRegistration= servletContext.addServlet("servlet",
+                new DispatcherServlet(servletConfig));
+
+        // Multipart Config
+        MultipartConfigElement multipartConfig= new MultipartConfigElement(Properties.TEMP_LOCATION, Properties.MAX_FILE_SIZE,
+                Properties.MAX_REQUEST_SIZE,Properties.FILE_THRESHOLD_SIZE);
         servletRegistration.setMultipartConfig(multipartConfig);
 
-        // Multipart Filter Config
-        FilterRegistration.Dynamic multipartFilter = servletContext.addFilter("multipartFilter", MultipartFilter.class);
-        multipartFilter.addMappingForUrlPatterns(null, true, "/*");
 
-       //Load  on startup*//*
+        //Multipart Filter Config
+        FilterRegistration.Dynamic multipartFilet= servletContext.addFilter("multipartFilter", MultipartFilter.class);
+        multipartFilet.addMappingForUrlPatterns(null, true,"/*");
+
+        //Load on startup
         servletRegistration.setLoadOnStartup(1);
 
-        // Add  Mapping
+        //mapping
         servletRegistration.addMapping("/");
 
     }

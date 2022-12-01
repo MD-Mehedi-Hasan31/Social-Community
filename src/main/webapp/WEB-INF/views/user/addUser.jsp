@@ -16,24 +16,25 @@
 <body>
 
 <%--@elvariable id="user" type=""--%>
-<form:form action="${pageContext.request.contextPath}/user/save" enctype="multipart/form-data" method="post" modelAttribute="user">
+<form:form action="${pageContext.request.contextPath}/user/save" enctype="multipart/form-data"
+           method="post" modelAttribute="user">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label>Name</label>
-                <form:input path="username" type="text" class="form-control" required="true"></form:input>
+                <form:input path="username" type="text" class="form-control" required="true"/>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label>Email</label>
-                <form:input path="email" type="text" class="form-control" required="true"></form:input>
+                <form:input path="email" type="text" class="form-control" required="true"/>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label>Password</label>
-                <form:input path="password" type="password" class="form-control" required="true"></form:input>
+                <form:input path="password" type="password" class="form-control" required="true"/>
             </div>
         </div>
         <div class="col-md-6">

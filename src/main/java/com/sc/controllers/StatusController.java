@@ -50,7 +50,8 @@ public class StatusController {
     }
 
     @PostMapping("/store")
-        public String store(Model model, @ModelAttribute("status") StatusDto statusModel, @RequestParam("images") MultipartFile[] files) {
+        public String store(Model model, @ModelAttribute("status") StatusDto statusModel,
+                            @RequestParam("images") MultipartFile[] files) {
 
             Location location = locationDao.getByName(statusModel.getLocation());
             List<Attachment> attachmentList = new ArrayList<>();
@@ -80,6 +81,26 @@ public class StatusController {
             model.addAttribute("status", status);
 
             return "redirect:/status/show/" + status.getId();
+        }
+
+        @GetMapping(value = "/show/{id}")
+        public String show(Model model, @PathVariable(value = "id")String id){
+
+         Status status= statusDao.getById(Long.parseLong(id));
+
+         model.addAttribute("status",status);
+
+         return "status/show";
+        }
+
+
+        @GetMapping("/list")
+        public String maintain(Model model){
+
+         List<Status> statusList= statusDao.getAll();
+         model.addAttribute("statusList", statusList);
+
+         return "status/list";
         }
     }
 
